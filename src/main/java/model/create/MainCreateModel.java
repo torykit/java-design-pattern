@@ -7,6 +7,9 @@ import model.create.factory.SenderStaticFactory;
 import model.create.factory.abs.Produce;
 import model.create.factory.abs.SenderMailFactory;
 import model.create.factory.base.Sender;
+import model.create.prototype.Address;
+import model.create.prototype.CloneUtils;
+import model.create.prototype.Person;
 import model.create.singleton.Singleton;
 
 import java.util.List;
@@ -53,6 +56,11 @@ public class MainCreateModel {
          *      因此，是选择工厂模式还是建造者模式，依实际情况而定。
          */
         builderDemo();
+
+        /**
+         * 原型模式
+         */
+        prototype();
     }
 
     /**
@@ -114,5 +122,32 @@ public class MainCreateModel {
             sender.say();
         }
     }
+
+
+    /**
+     * 原型模式 演示
+     */
+    private static void prototype(){
+        Person person = new Person("Nick",20);
+        person.setAddress(new Address("上海市"));
+        System.out.println("建造者模式下: ");
+        System.out.println(String.format("  对象person的名字:%s ,年龄:%d ,地址:%s", person.getName(),person.getAge(),person.getAddress()));
+
+        System.out.println("----从person对象浅拷贝person1");
+        Person person1 = person.clone();
+        person1.setName("Jack");
+        person1.getAddress().setAddress("Beijing");
+        System.out.println(String.format("  对象person1的名字:%s ,年龄:%d,地址:%s", person1.getName(),person1.getAge(),person1.getAddress()));
+        System.out.println(String.format("  对象person的名字:%s ,年龄:%d,地址:%s", person.getName(),person.getAge(),person.getAddress()));
+
+        System.out.println("----从person对象浅拷贝person2");
+        Person person2 = CloneUtils.clone(person);
+        person2.setName("Tim");
+        person2.getAddress().setAddress("湖北市");
+        System.out.println(String.format("  对象person2的名字:%s ,年龄:%d,地址:%s", person2.getName(),person2.getAge(),person2.getAddress()));
+        System.out.println(String.format("  对象person的名字:%s ,年龄:%d,地址:%s", person.getName(),person.getAge(),person.getAddress()));
+
+    }
+
 
 }
